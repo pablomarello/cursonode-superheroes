@@ -1,3 +1,4 @@
+import { validationResult } from 'express-validator';
 import { obtenerSuperheroePorId, obtenerTodosLosSuperheroes,
   buscarSuperheroesPorAtributo, obtenerSuperheroesMayoresDe30, crearSuperHeroe, 
   actualizarSuperHeroe, eliminarSuperheroePorId,
@@ -7,6 +8,11 @@ import { renderizarSuperheroe, renderizarListaSuperheroes }
   from '../views/responseView.mjs';
 
   export async function crearSuperheroeController(req, res) {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errores: errors.array() });
+    }
+
     const nuevoSuperheroe = req.body;
     const superheroeCreado = await crearSuperHeroe(nuevoSuperheroe);
   
