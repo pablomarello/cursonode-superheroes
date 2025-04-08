@@ -11,6 +11,6 @@ const superheroSchema = new moongose.Schema({
   aliados: [String],
   enemigos: [String],
   createdAt: { type: Date, default: Date.now }
-}, {collection:'Grupo-06'});
+}, {collection:'Grupo-17'});
 
 export default moongose.model('SuperHero', superheroSchema);
