@@ -3,6 +3,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { connectDB } from './src/config/dbConfig.mjs';
 import superHeroRoutes from './src/routes/superHeroRoutes.mjs';
+import expressEjsLayouts from 'express-ejs-layouts';
 
 // Configuracion de __dirname en ES Modules
 const __filename = fileURLToPath(import.meta.url);
@@ -17,10 +18,24 @@ app.set('view engine', 'ejs');
 // Definicion de la carpeta de vistas dentro de src
 app.set('views', path.join(__dirname, 'src', 'views'));
 
+//Configuración express-ejs-layouts
+app.use(expressEjsLayouts);
+app.set('layout', 'layout') //archivo base de layout
+
+//Servir archivos estaticos
+app.use(express.static(path.join(__dirname, 'public')));
+
 app.use(express.json());
 
 // Middleware para parsear los datos del cuerpo (body) de los formularios
 app.use(express.urlencoded({ extended: true }));
+
+app.get('/', (req, res) =>{
+  res.render('index', {
+    title: ' Pagina principal',
+  })
+})
+
 
 //ejemplo ejs
 /* app.get('/greating', (req,res) => {
